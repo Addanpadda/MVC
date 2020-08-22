@@ -1,31 +1,32 @@
 package com.example.view
 
-import com.example.model.*
+import com.example.entities.Todo
+import com.example.entities.Command
+import com.example.model.Model
+import com.example.view.interfaces.View
 
-class View {
-    var model = Model()
-
-    fun displayTodoListCommandView(): Int {
+class View(override var model: Model) : View {
+    override fun displayTodoListCommandView() {
         println("Type to: a - add; r - remove; q - quit")
         print("> ")
+    }
+
+    override fun getCommandFromTodoListCommandView(): Command {
         val command = readLine()!!
         println()
 
-        when(command) {
-            "a" -> return displayAddTodoView()
-            "r" -> return displayRemoveTodoView()
-            "q" -> return -1
+        return when(command) {
+            "a" -> Command.ADD
+            "r" -> Command.REMOVE
+            "q" -> Command.QUIT
             else -> {
-                println("Not a valid command")
-                return displayTodoListCommandView()
+                Command.INVALID
             }
         }
     }
 
-    fun displayAddTodoView(): Int {
-        val todo = getTodoFromPromtView()
-        model.addTodo(todo)
-        return 0
+    override fun displayAddTodoViewAndGetTodo(): Todo {
+        return getTodoFromPromtView()
     }
 
     fun getTodoFromPromtView(): Todo {
@@ -35,10 +36,9 @@ class View {
         return Todo(description, deadline)
     }
 
-    fun displayRemoveTodoView(): Int {
+    override fun displayRemoveTodoViewAndGetIndex(): Int {
         val index = getInfoFromPromtView("Index to remove: ").toInt()
-        model.removeTodoByIndex(index)
-        return 0
+        return index
     }
 
     fun getInfoFromPromtView(promt: String): String {
@@ -52,31 +52,25 @@ class View {
         return info
     }
 
-    fun displayTodos() {
+    override fun displayInvalidCommandView() {
+        println("Not a valid command")
+    }
+
+    override fun displayTodoListView() {
         var todos = model.getTodos()
 
         if (model.countTodos() == 0) {
             println("You have no todos!\n")
         } else {
-            println("----- TODOS -----")
+            println("------- TODOS -------")
             for(index in 0..todos.lastIndex) {
                 println("$index) ${todos[index].description} : ${todos[index].deadline}")
             }
-            println("-----------------")
+            println("---------------------")
         }
     }
-}
 
-fun main(args: Array<String>) {
-    var view = View()
-    var shouldBeRunning = true
-
-    while(shouldBeRunning) {
-        view.displayTodos()
-        val exitCode = view.displayTodoListCommandView()
-        if (exitCode == -1) {
-            shouldBeRunning = false
-            println("Bye!")
-        }
+    override fun displayQuitView() {
+        println("Bye!")
     }
 }

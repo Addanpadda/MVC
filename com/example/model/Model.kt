@@ -1,27 +1,28 @@
 package com.example.model
 
-import com.example.model.Todo
+import com.example.entities.Todo
+import com.example.model.interfaces.Model
 
-class Model {
-    private val _todos: MutableList<Todo> = mutableListOf()
+class Model : Model {
+    private val todos: MutableList<Todo> = mutableListOf()
 
-    fun addTodo(todo: Todo) {
-        _todos.add(todo)
+    override fun addTodo(todo: Todo) {
+        todos.add(todo)
     }
 
-    fun removeTodo(todo: Todo) {
-        _todos.remove(todo)
+    override fun removeTodo(todo: Todo) {
+        todos.remove(todo)
     }
 
-    fun removeTodoByIndex(index: Int) {
-        _todos.removeAt(index)
+    override fun removeTodoByIndex(index: Int) {
+        todos.removeAt(index)
     }
 
-    fun getTodos(): List<Todo> {
-        return _todos
+    override fun getTodos(): List<Todo> {
+        return todos
     }
 
-    fun countTodos(): Int {
-        return _todos.count()
+    override fun countTodos(): Int {
+        return todos.count()
     }
 }
