@@ -1,23 +1,26 @@
 package com.example.view.interfaces
 
-import com.example.entities.Todo
+import com.example.model.Todo
 import com.example.entities.Command
-import com.example.model.Model
 
 interface View {
-    var model: Model
+    fun deliver()
+
+    fun displayTodoListView()
 
     fun displayTodoListCommandView()
 
-    fun getCommandFromTodoListCommandView(): Command
+    fun handleInputFromTodoListCommandView()
 
-    fun displayAddTodoViewAndGetTodo(): Todo
+    fun processCommandInput(): Command
 
-    fun displayRemoveTodoViewAndGetIndex(): Int
+    fun displayAddTodoView()
+
+    fun displayRemoveTodoView()
 
     fun displayInvalidCommandView()
 
-    fun displayTodoListView()
+    fun quit()
 
     fun displayQuitView()
 }

@@ -1,10 +1,17 @@
-package com.example.model
+package com.example.controller
 
-import com.example.entities.Todo
-import com.example.model.interfaces.Model
+import com.example.view.ViewImpl
+import com.example.model.Todo
+import com.example.entities.Command
+import com.example.controller.interfaces.Controller
 
-class Model : Model {
+class ControllerImpl : Controller() {
+    override var view = ViewImpl(::addTodo, ::removeTodoByIndex, ::getTodos)
     private val todos: MutableList<Todo> = mutableListOf()
+
+    init {
+        view.deliver()
+    }
 
     override fun addTodo(todo: Todo) {
         todos.add(todo)

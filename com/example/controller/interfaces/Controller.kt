@@ -1,13 +1,21 @@
 package com.example.controller.interfaces
 
-import com.example.view.View
-import com.example.model.Model
+import com.example.model.Todo
+import com.example.view.ViewImpl
 
 abstract class Controller {
-    abstract var model: Model
-    abstract var view: View
+    abstract var view: ViewImpl
 
     open var shouldBeRunning = true
 
-    abstract fun runApp()
+
+    abstract fun addTodo(todo: Todo)
+
+    abstract fun removeTodo(todo: Todo)
+
+    abstract fun removeTodoByIndex(index: Int)
+
+    abstract fun getTodos(): List<Todo>
+
+    abstract fun countTodos(): Int
 }

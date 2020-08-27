@@ -1,5 +1,5 @@
-import com.example.controller.Controller
+import com.example.controller.ControllerImpl
 
 fun main() {
-    Controller().runApp()
+    ControllerImpl()
 }
